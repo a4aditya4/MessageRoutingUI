@@ -1,0 +1,86 @@
+
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Prescriber Column -->
+    <ng-container matColumnDef="prescriber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Prescriber </th>
+      <td mat-cell *matCellDef="let element" > {{element.prescriber}} </td>
+    </ng-container>
+
+    <!-- Resident Column -->
+    <ng-container matColumnDef="resident">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Resident </th>
+      <td mat-cell *matCellDef="let element"> {{element.resident}} </td>
+    </ng-container>
+
+    <!-- Medication Column -->
+    <ng-container matColumnDef="medication">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Medication </th>
+      <td mat-cell *matCellDef="let element"> {{element.medication}} </td>
+    </ng-container>
+
+     <!-- Received Column -->
+     <ng-container matColumnDef="messageReceived">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Received </th>
+      <td mat-cell *matCellDef="let element"> {{element.messageReceived | date : 'dd/MM/yyyy hh:mm:ss a'}} </td>
+    </ng-container>
+
+    <!-- Vendor Column -->
+    <ng-container matColumnDef="vendorType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Vendor</th>
+      <td mat-cell *matCellDef="let element"> {{element.vendorType}} </td>
+    </ng-container>
+
+    <!-- Reason Column -->
+    <ng-container matColumnDef="archiveReason">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Reason</th>
+      <td mat-cell *matCellDef="let element"> {{element.archiveReason}} </td>
+    </ng-container>
+
+    <!-- Archived By Column --> archiveTs
+    <ng-container matColumnDef="archiveBy">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Archived By</th>
+      <td mat-cell *matCellDef="let element"> {{element.archiveBy}} </td>
+    </ng-container>
+
+    <!-- Archived By Column -->
+    <ng-container matColumnDef="archiveTs">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Archived</th>
+      <td mat-cell *matCellDef="let element"> {{element.archiveTs | date : 'dd/MM/yyyy hh:mm:ss a'}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="messageXml">
+      <th mat-header-cell *matHeaderCellDef>Message Xml</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button>
+          View Xml
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="archiveOrder">
+      <th mat-header-cell *matHeaderCellDef> Archive Order </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">mode_edit</mat-icon>Archive
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <td mat-footer-cell *matFooterCellDef colspan="9">
+        Loading data...
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <td mat-footer-cell *matFooterCellDef colspan="9">
+        No data.
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></tr>
+    <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+  </div>

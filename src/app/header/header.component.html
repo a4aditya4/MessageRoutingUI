@@ -1,0 +1,41 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <div fxLayout="row">
+      <button mat-button>
+        <mat-icon>home</mat-icon>
+        <span class="logo">Surescript Orders Routing</span>
+      </button>
+      <!-- *ngFor="let item of menuItems" *ngIf="!deviceXs"  -->
+      <div fxLayout="row" *ngFor="let menu of menuItems" >
+        <a mat-button [routerLink]="menu.url" routerLinkActive="active">{{menu.title + "(" + menu.count +")"}}</a>
+        <!-- <a mat-button routerLink="/failedorders">Failed</a>
+        <a mat-button routerLink="/successorders">Success</a>
+        <a mat-button routerLink="/archiveorders">Archive</a> -->
+      </div>
+    </div>
+    <div>
+      <!-- <button *ngIf="deviceXs" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button> *ngIf="!deviceXs" -->
+      <button
+
+        mat-button
+        [matMenuTriggerFor]="menu"
+        fxLayoutAlign="end">
+        <label>This page will auto refresh in </label>
+        <countdown [config]="{ leftTime: 60, format: 's' }"></countdown>
+        <label> seconds</label>
+      </button>
+    </div>
+   </mat-toolbar-row>
+   <!--
+   *ngIf="deviceXs"
+  <mat-toolbar-row fxLayoutAlign="space-between end" *ngFor="let menu of menuItems" >
+    <a mat-button [routerLink]="menu.url" routerLinkActive="active">{{menu.title + "(" + menu.count +")"}}</a>
+  </mat-toolbar-row> -->
+</mat-toolbar>
+<!-- Menu Items -->
+<!-- <mat-menu #menu="matMenu" fxLayoutAlign="end">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu> -->

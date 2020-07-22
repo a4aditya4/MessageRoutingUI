@@ -1,0 +1,97 @@
+
+<div style="text-align: right;">
+  <button mat-raised-button color="primary" (click)="submitToLtc400()" >Submit Selected to Ltc400</button>
+</div>
+<div style="text-align: left;">
+  <mat-form-field>
+    <!-- <mat-label>Favorite food</mat-label> -->
+    <input matInput [(ngModel)]="searchKey" placeholder="fillter " autocomplete="off" (keyup)="applyFillter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onClearSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+    <!-- Prescriber Column -->
+    <ng-container matColumnDef="prescriber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Prescriber </th>
+      <td mat-cell *matCellDef="let element" > {{element.prescriber}} </td>
+    </ng-container>
+
+    <!-- Resident Column -->
+    <ng-container matColumnDef="resident">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Resident </th>
+      <td mat-cell *matCellDef="let element"> {{element.resident}} </td>
+    </ng-container>
+
+    <!-- Medication Column -->
+    <ng-container matColumnDef="medication">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Medication </th>
+      <td mat-cell *matCellDef="let element"> {{element.medication}} </td>
+    </ng-container>
+
+    <!-- Directions Column -->
+    <ng-container matColumnDef="directions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Directions </th>
+      <td mat-cell *matCellDef="let element"> {{element.directions}} </td>
+    </ng-container>
+
+     <!-- Received Column -->
+     <ng-container matColumnDef="messageReceived">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > Received </th>
+      <td mat-cell *matCellDef="let element"> {{element.messageReceived | date : 'dd/MM/yyyy hh:mm:ss a'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="AdditionalDetail">
+      <th mat-header-cell *matHeaderCellDef> Additional Detail </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button (click)="onViewDetail()">View Details</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ArchiveOrder">
+      <th mat-header-cell *matHeaderCellDef> Archive Order </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">mode_edit</mat-icon>Archive
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <td mat-footer-cell *matFooterCellDef colspan="7">
+        Loading data...
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <td mat-footer-cell *matFooterCellDef colspan="7">
+        No data.
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></mat-footer-row>
+    <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>
